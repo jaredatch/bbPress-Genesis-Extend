@@ -1,0 +1,103 @@
+# This German language file Copyright (C) 2012 by David Decker of deckerweb.de
+# This file is distributed under the same license as the bbPress Genesis Extend Plugin package.
+#
+# Weitere deutsche Sprachdateien fuer Genesis Framework, Genesis Child Themes und Genesis Plugins
+# sowie WordPress, bbPress 2.x, Plugins und Themes sind hier zu finden:
+# --> http://deckerweb.de/sprachdateien/
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bbPress Genesis Extend\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-24 22:08+0100\n"
+"PO-Revision-Date: 2012-02-24 22:16+0100\n"
+"Last-Translator: David Decker <deckerweb.mobil@googlemail.com>\n"
+"Language-Team: DECKERWEB <deckerweb.mobil@googlemail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#@ bbpress-genesis-extend
+#: bbpress-genesis-extend-settings.php:43
+msgid "Forum Layout: "
+msgstr "Forenindex-Layout: "
+
+#@ bbpress-genesis-extend
+#: bbpress-genesis-extend-settings.php:45
+msgid "Genesis default"
+msgstr "Genesis Standard"
+
+#@ bbpress-genesis-extend
+#: bbpress-genesis-extend-settings.php:55
+msgid "Register a forum specific sidebar that will be used on all forum pages"
+msgstr "Eine Foren-spezifische Sidebar registrieren, die auf allen Foren-Seiten verwendet wird."
+
+#@ bbpress-genesis-extend
+#: bbpress-genesis-extend.php:126
+msgid "Forum Sidebar"
+msgstr "Foren-Sidebar"
+
+#@ bbpress-genesis-extend
+#: bbpress-genesis-extend.php:127
+msgid "This is the primary sidebar used on the forums."
+msgstr "Dies ist die Haupt-Sidebar (Primary), die für das bbPress-Forum verwendet wird."
+
+#@ bbpress-genesis-extend
+#: bbpress-genesis-extend.php:157
+msgid "Forum Sidebar Widget Area"
+msgstr "Widget-Bereich der Foren-Sidebar"
+
+#@ bbpress-genesis-extend
+#: bbpress-genesis-extend.php:160
+#, php-format
+msgid "This is the Forum Sidebar Widget Area. You can add content to this area by visiting your <a href=\"%s\">Widgets Panel</a> and adding new widgets to this area."
+msgstr "Dies ist der Widget-Bereich der Foren-Sidebar (Primary). Sie können Inhalte hinzufügen, indem Sie Ihr <a href=\"%s\">Widgets Panel</a> besuchen und neue Widgets zu diesem Bereich hinzufügen."
+
+#@ bbpress-genesis-extend
+#. translators: plugin header field 'Name'
+#: init.php:0
+msgid "bbPress Genesis Extend"
+msgstr "bbPress Genesis-Erweiterung"
+
+#@ bbpress-genesis-extend
+#. translators: plugin header field 'PluginURI'
+#: init.php:0
+msgid "http://jaredatchison.com/"
+msgstr "http://jaredatchison.com/"
+
+#@ bbpress-genesis-extend
+#. translators: plugin header field 'Description'
+#: init.php:0
+msgid "Provides basic compaitibility between bbPress and the Genesis Framework."
+msgstr "Bietet eine Basisintegration des bbPress 2.x Forum Plugin mit dem Genesis Framework."
+
+#@ bbpress-genesis-extend
+#. translators: plugin header field 'Author'
+#: init.php:0
+msgid "Jared Atchison"
+msgstr "Jared Atchison"
+
+#@ bbpress-genesis-extend
+#. translators: plugin header field 'AuthorURI'
+#: init.php:0
+msgid "http://jaredatchison.com"
+msgstr "http://jaredatchison.com"
+
+#@ bbpress-genesis-extend
+#. translators: plugin header field 'Version'
+#: init.php:0
+msgid "1.0"
+msgstr "1.0"
+
+#@ bbpress-genesis-extend
+#: init.php:36
+msgid "Sorry, you need to have a Genesis child theme and bbPress activated first."
+msgstr "Hinweis: Es muss zuerst ein Genesis Framework Child Theme und das bbPress 2.x Forum Plugin aktiviert werden."
+

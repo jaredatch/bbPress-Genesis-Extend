@@ -1,0 +1,107 @@
+/* General tweaks
+------------------------------------------------------------ */
+
+#bbpress-forums ul li {
+	padding: 0;
+	margin: 0;
+	background-image: none;
+	list-style: none !important;
+}
+
+#bbpress-forums .alt, 
+#bbpress-forums .depth-1, 
+#bbpress-forums .even {
+	border: 0;
+}
+
+#bbpress-forums img {
+	padding: 0;
+	background: #fff;
+}
+
+#bbpress-forums .page-title {
+	border: none;
+	font-size: 14px;
+	margin: 0 0 20px 0;
+	padding: 0;
+	text-align: left;
+	display: block;
+}
+
+#bbpress-forums #description {
+	display: block;
+}
+
+#content ul.bbp-topics,
+#content ul.bbp-topics li {
+	list-style: none;
+	margin-left: 0;
+	padding: 0;
+}
+
+#content ul.bbp-topics ul.forum-titles {
+	padding: 8px;
+}
+
+#bbpress-forums div.reply,
+#bbpress-forums div.topic  {
+	overflow: auto;
+}
+
+/* Set buttons to look similar to default Genesis styling */
+
+#bbpress-forums input[type=text],
+#bbpress-forums input[type=password] {
+	color: #333;
+	font-size: 14px;
+	padding: 5px;
+}
+
+#bbpress-forums button[type=submit] {
+	padding: 5px 7px;
+	font-size: 16px;
+}
+
+/* User profile adjustments
+------------------------------------------------------------ */
+
+#bbp-your-profile h2.entry-title {
+	margin: 0;
+	padding: 10px 0;
+}
+
+#content #bbp-your-profile fieldset label, 
+#container #bbp-your-profile fieldset label {
+	float: left;
+	width: 20%;
+	padding-right: 20px;
+	text-align: right;
+}
+
+#content fieldset.bbp-form textarea, 
+#container fieldset.bbp-form textarea, 
+#wrapper fieldset.bbp-form textarea, 
+#content fieldset.bbp-form input[type=text], 
+#container fieldset.bbp-form input[type=text], 
+#wrapper fieldset.bbp-form input[type=text] {
+	width: 70%;
+}
+
+#bbp-your-profile fieldset span.description {
+	margin-left: 23%;
+}
+
+#content fieldset.bbp-form,
+#container fieldset.bbp-form, 
+#wrapper fieldset.bbp-form,
+#bbpress-forums fieldset.submit {
+	border: 1px solid #EEE;
+	padding: 10px 20px;
+	margin: 0 0 10px 0;
+}
+
+/* prevent editor from going crazy */
+#bbpress-forums .wp-editor-wrap input {
+	width: auto !important;
+}
+
