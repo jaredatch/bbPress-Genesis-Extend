@@ -36,7 +36,8 @@ class BBP_Genesis {
 		// available to bbPress in the Genesis page load process.
 		add_action( 'genesis_before',           array( $this, 'genesis_post_actions'        ) );
 		add_action( 'genesis_before',           array( $this, 'check_genesis_forum_sidebar' ) );
-
+		add_action( 'wp_enqueue_scripts',		array( $this, 'front_styles'				) );
+		
 		// Configure which Genesis layout to apply
 		add_filter( 'genesis_pre_get_option_site_layout', array( $this, 'genesis_layout'    ) );
 		
@@ -103,16 +104,23 @@ class BBP_Genesis {
 			// Re add 'the_content' back onto 'genesis_post_content'
 			add_action( 'genesis_post_content', 'the_content' );	
 			
-			/** Enqueues ******************************************************/
-			
-			// Styles can be disabled if needed.
-			if ( apply_filters( 'bbpge_css', true ) ) {
-				wp_register_style( 'bbpress-genesis-extend', plugin_dir_url( __FILE__ ) . 'style.css' );
-			    wp_enqueue_style( 'bbpress-genesis-extend' );
-			}
-			
 		}
 	}
+
+	/**
+	 * Load optional CSS
+	 *
+	 * @since 0.8
+	 */
+	
+	public function front_styles() {
+
+		if ( apply_filters( 'bbpge_css', true ) ) {
+		    wp_enqueue_style( 'bbpress-genesis-extend', plugins_url('style.css', __FILE__), array(), null, 'all' );
+		}
+
+	}
+
 	
 	/**
 	 * Register forum specific sidebar if enabled
@@ -126,7 +134,7 @@ class BBP_Genesis {
 				'id'          => 'sidebar-genesis-bbpress', 
 				'name'        => __( 'Forum Sidebar', 'bbpress-genesis-extend' ), 
 				'description' => __( 'This is the primary sidebar used on the forums.', 'bbpress-genesis-extend' )
-				 ) 
+				) 
 			);
 		}
 
