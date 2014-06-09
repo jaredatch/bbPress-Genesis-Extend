@@ -3,12 +3,11 @@
  * Main bbPress Genesis Extend class, this does the heavy lifting
  *
  * @package  bbPressGenesisExtend
- * @since    0.8
+ * @since    0.8.0
  */
 
 if ( !class_exists( 'BBP_Genesis' ) ) :
 
-// If class doesn't exist (bbP 2.1+), let's roll
 class BBP_Genesis {
 
 	/** Functions *************************************************************/
@@ -16,7 +15,8 @@ class BBP_Genesis {
 	/**
 	 * The main bbPress Genesis loader
 	 *
-	 * @since 0.8
+	 * @access public
+	 * @since 0.8.0
 	 */
 	public function __construct() {
 		$this->setup_actions();
@@ -25,7 +25,8 @@ class BBP_Genesis {
 	/**
 	 * Setup the Genesis actions
 	 *
-	 * @since 0.8
+	 * @access private
+	 * @since 0.8.0
 	 */
 	private function setup_actions() {
 
@@ -34,24 +35,24 @@ class BBP_Genesis {
 
 		// We hook into 'genesis_before' because it is the most reliable hook
 		// available to bbPress in the Genesis page load process.
-		add_action( 'genesis_before',           array( $this, 'genesis_post_actions'        ) );
-		add_action( 'genesis_before',           array( $this, 'check_genesis_forum_sidebar' ) );
-		add_action( 'wp_enqueue_scripts',		array( $this, 'front_styles'				) );
+		add_action( 'genesis_before',     array( $this, 'genesis_post_actions'        ) );
+		add_action( 'genesis_before',     array( $this, 'check_genesis_forum_sidebar' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'front_styles'                ) );
 		
 		// Configure which Genesis layout to apply
-		add_filter( 'genesis_pre_get_option_site_layout', array( $this, 'genesis_layout'    ) );
+		add_filter( 'genesis_pre_get_option_site_layout', array( $this, 'genesis_layout' ) );
 		
 		// Add Layout and SEO options to Forums
-		add_post_type_support( 'forum', 'genesis-layouts' );
-		add_post_type_support( 'forum', 'genesis-seo'     );
+		add_post_type_support( bbp_get_forum_post_type(), 'genesis-layouts' );
+		add_post_type_support( bbp_get_forum_post_type(), 'genesis-seo'     );
 
 	}
 
 	/**
 	 * Tweak problematic Genesis post actions
 	 *
-	 * @access private
-	 * @since 0.8
+	 * @access public
+	 * @since 0.8.0
 	 */
 	public function genesis_post_actions() {
 
@@ -63,7 +64,11 @@ class BBP_Genesis {
 
 			/** Remove Actions ************************************************/
 
-			// Remove genesis breadcrumbs
+			/**
+			 * Remove genesis breadcrumbs
+			 *
+			 * bbPress packs its own breadcrumbs, so we don't need the G version.
+			 */
 			remove_action( 'genesis_before_loop', 'genesis_do_breadcrumbs' );
 
 			/**
@@ -72,8 +77,10 @@ class BBP_Genesis {
 			 * If you moved the info/meta from their default locations, you are
 			 * on your own.
 			 */
-			remove_action( 'genesis_before_post_content', 'genesis_post_info' );
-			remove_action( 'genesis_after_post_content',  'genesis_post_meta' );
+			remove_action( 'genesis_before_post_content', 'genesis_post_info'     );
+			remove_action( 'genesis_after_post_content',  'genesis_post_meta'     );
+			remove_action( 'genesis_entry_header',        'genesis_post_info', 12 );
+			remove_action( 'genesis_entry_footer',        'genesis_post_meta'     );
 
 			/**
 			 * Remove Genesis post image and content
@@ -81,51 +88,89 @@ class BBP_Genesis {
 			 * bbPress heavily relies on the_content() so if Genesis is
 			 * modifying it unexpectedly, we need to un-unexpect it.
 			 */
-			remove_action( 'genesis_post_content', 'genesis_do_post_image'   );
-			remove_action( 'genesis_post_content', 'genesis_do_post_content' );
+			remove_action( 'genesis_post_content',  'genesis_do_post_image'     );
+			remove_action( 'genesis_post_content',  'genesis_do_post_content'   );
+			remove_action( 'genesis_entry_content', 'genesis_do_post_image',  8 );
+			remove_action( 'genesis_entry_content', 'genesis_do_post_content'   );
 
 			/**
 			 * Remove authorbox
 			 * 
 			 * In some odd cases the Genesis authorbox could appear
 			 */
-			remove_action( 'genesis_after_post', 'genesis_do_author_box_single' );
+			remove_action( 'genesis_after_post',   'genesis_do_author_box_single' );
+			remove_action( 'genesis_entry_footer', 'genesis_do_author_box_single' );
 
-			// Remove the navigation after the post loop
+			/**
+			 * Remove the navigation
+			 *
+			 * Make sure the Genesis navigation doesn't try to show after the loop.
+			 */
 			remove_action( 'genesis_after_endwhile', 'genesis_posts_nav' );
-			
-			// Remove post title from profile pages (as they don't work)
-			if ( bbp_is_single_user() || bbp_is_single_user_edit() || bbp_is_user_home() ) {
-				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
-			}
 
+			/**
+			 * Remove Genesis profile fields
+			 * 
+			 * In some use cases the Genesis fields were showing (incorrectly)
+			 * on the bbPress profile edit pages, so we remove them just in case.
+			 */
+			if ( bbp_is_single_user_edit() ) {
+				remove_action( 'show_user_profile', 'genesis_user_options_fields' );
+				remove_action( 'show_user_profile', 'genesis_user_layout_fields'  );
+				remove_action( 'show_user_profile', 'genesis_user_seo_fields'     );
+				remove_action( 'show_user_profile', 'genesis_user_archive_fields' );
+			}
+			
 			/** Add Actions ***************************************************/
 
-			// Re add 'the_content' back onto 'genesis_post_content'
-			add_action( 'genesis_post_content', 'the_content' );	
+			/**
+			 * Re-add the_content back
+			 *
+			 * bbPress doesn't play nice with the Genesis formatted content, so
+			 * we remove it above and reapply the normal version bbPress expects.
+			 */
+			add_action( 'genesis_post_content',  'the_content' );
+			add_action( 'genesis_entry_content', 'the_content' );
+
+			/** Filters *******************************************************/	
 			
+			/**
+			 * Remove forum/topic descriptions
+			 *
+			 * Many people, myself included, are not a fan of the bbPress
+			 * descriptions, e.g. "This forum contains 2 topics and 4 replies".
+			 * So we provided an simple option in the settings to remove them.
+			 */
+			if ( genesis_get_option( 'bbp_forum_desc' ) ) {
+				add_filter( 'bbp_get_single_forum_description', '__return_false' );
+				add_filter( 'bbp_get_single_topic_description', '__return_false' );
+			}
 		}
 	}
 
 	/**
 	 * Load optional CSS
 	 *
-	 * @since 0.8
+	 * This has been deprecated and will not run if you are running > 0.8.4.
+	 *
+	 * @access public
+	 * @since 0.8.0
 	 */
 	
 	public function front_styles() {
 
-		if ( apply_filters( 'bbpge_css', true ) ) {
-		    wp_enqueue_style( 'bbpress-genesis-extend', plugins_url('style.css', __FILE__), array(), null, 'all' );
+		if ( get_option( 'bbpge_version') == false ) {
+			if ( apply_filters( 'bbpge_css', true ) ) {
+				wp_enqueue_style( 'bbpress-genesis-extend', plugins_url('style.css', __FILE__), array(), null, 'all' );
+			}	
 		}
-
 	}
 
-	
 	/**
 	 * Register forum specific sidebar if enabled
 	 *
-	 * @since 0.8
+	 * @access public
+	 * @since 0.8.0
 	 */
 	public function register_genesis_forum_sidebar() {
 
@@ -137,12 +182,12 @@ class BBP_Genesis {
 				) 
 			);
 		}
-
 	}
 	
 	/**
 	 * Setup forum specific sidebar on bbPress pages if enabled
 	 *
+	 * @access public
 	 * @since 0.8
 	 */
 	public function check_genesis_forum_sidebar() {
@@ -150,21 +195,24 @@ class BBP_Genesis {
 		if ( is_bbpress() && genesis_get_option( 'bbp_forum_sidebar' ) ) {
 
 			// Remove the default Genesis sidebar
-			remove_action( 'genesis_sidebar', 'genesis_do_sidebar' );
+			remove_action( 'genesis_sidebar', 'genesis_do_sidebar'     );
 			
 			// If Genesis Simple Sidebar plugin is in place, nuke it
-			remove_action( 'genesis_sidebar', 'ss_do_sidebar'      );
+			remove_action( 'genesis_sidebar', 'ss_do_sidebar'          );
+
+			// Genesis Connect WooCommerce sidebar
+			remove_action( 'genesis_sidebar', 'gencwooc_ss_do_sidebar' );
 			
 			// Load up the Genisis-bbPress sidebar
 			add_action( 'genesis_sidebar', array( $this, 'load_genesis_forum_sidebar' ) );
 		}	
-
 	}
 	
 	/**
 	 * Loads the forum specific sidebar
 	 *
-	 * @since 0.8
+	 * @access public
+	 * @since 0.8.0
 	 */
 	public function load_genesis_forum_sidebar() {
 	
@@ -179,25 +227,28 @@ class BBP_Genesis {
 				echo '</p></div>';
 			echo '</div></div>';
 		}
-
 	}
 	
 	/**
-	 * If you set a specific layout for a forum, that will be used for that forum and it's topics.
-	 * If you set one in the Genesis-bbPress setting, that gets checked next.
-	 * Otherwise bbPress will display itself in Genesis default layout.
+	 * Genesis bbPress layout control
+	 * 
+	 * If you set a specific layout for a forum, that will be used for that forum
+	 * and it's topics. If you set one in the Genesis-bbPress setting, that gets
+	 * checked next. Otherwise bbPress will display itself in Genesis default layout.
 	 *
-	 * @param int $forum_id
+	 * @access public
+	 * @since 0.8.0
+	 * @param string $layout
 	 * @return bool layout to use
 	 */
-	public function genesis_layout( $forum_id = 0 ) {
+	public function genesis_layout( $layout ) {
 
 		// Bail if no bbPress
 		if ( !is_bbpress() )
-			return;	
+			return $layout;	
 
 		// Set some defaults
-		$forum_id = bbp_get_forum_id( $forum_id );
+		$forum_id = bbp_get_forum_id();
 		// For some reason, if we use the cached version, weird things seem to happen.
 		// This needs more investigation, for now we pass false as a work around.
 		$retval   = genesis_get_option( 'site_layout', null, false ); 
@@ -219,7 +270,6 @@ class BBP_Genesis {
 
 		// Filter the return value
 		return apply_filters( 'bbp_genesis_layout', $retval, $forum_id, $parent );
-
 	}
 	
 }
@@ -228,7 +278,7 @@ endif;
 /**
  * Loads Genesis helper inside bbPress global class
  *
- * @since 0.8
+ * @since 0.8.0
  */
 function bbpge_setup() {
 	// Instantiate Genesis for bbPress
