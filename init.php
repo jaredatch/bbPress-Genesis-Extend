@@ -37,7 +37,7 @@ class bbpge_init {
 	 * @since 0.8
 	 */
 	function __construct() {
-		add_action( 'bbp_after_setup_theme', array( $this, 'genesis_check' ) );
+		add_action( 'genesis_init', array( $this, 'genesis_check' ) );
 	}
 	
 	/**
@@ -46,8 +46,6 @@ class bbpge_init {
 	 * @since 0.8
 	 */
 	function genesis_check() {
-		
-		if ( 'genesis' == basename( TEMPLATEPATH ) ) {
 
 			// Load the text domain for translations
 			add_action( 'init', array( $this, 'pe_init' ) );
@@ -58,8 +56,7 @@ class bbpge_init {
 
 			// All systems go!
 			add_action( 'bbp_ready', 'bbpge_setup', 6 );
-		}
-		
+			
 	}
 
 	/**
