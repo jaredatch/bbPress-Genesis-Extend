@@ -2,9 +2,9 @@
 Contributors: jaredatch
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AD8KTWTTDX9JL
 Tags: bbpress, genesis
-Requires at least: 3.6
-Tested up to: 3.6
-Stable tag: 1.0.2
+Requires at least: 3.9.1
+Tested up to: 3.9.1
+Stable tag: trunk
  
 Provides basic compatibility with bbPress and the Genesis Framework with a few extra goodies.
 
@@ -50,6 +50,10 @@ Specifically, font sizes often need to be adjusted so bbPress "blends" with your
 1. Options on the Genesis Settings page. 
 
 == Changelog ==
+
+= 1.1.0
+* Fixed issue with Genesis 2.1, props @NicktheGeek and @wpsmith
+* Update hook used for init to avoid edge case issues, props @NicktheGeek
 
 = 1.0.2 =
 * Fixed PHP Notice, props Daan Kortenbach
