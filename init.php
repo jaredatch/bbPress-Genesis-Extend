@@ -43,7 +43,7 @@ class bbpge_init {
 		// Activation
 		register_activation_hook( __FILE__,  array( $this, 'activation'    ) );
 
-		add_action( 'bbp_after_setup_theme', array( $this, 'genesis_check' ) );
+		add_action( 'genesis_init', array( $this, 'genesis_check' ) );
 	}
 	
 	/**
@@ -52,19 +52,16 @@ class bbpge_init {
 	 * @since 0.8.0
 	 */
 	function genesis_check() {
-		
-		if ( 'genesis' == basename( TEMPLATEPATH ) ) {
 
-			// Load the text domain for translations
-			add_action( 'init', array( $this, 'pe_init' ) );
+		// Load the text domain for translations
+		add_action( 'init', array( $this, 'pe_init' ) );
 
-			// The meat and gravy
-			require_once( dirname( __FILE__ )  . '/bbpress-genesis-extend.php'          );
-			require_once( dirname( __FILE__ )  . '/bbpress-genesis-extend-settings.php' );
+		// The meat and gravy
+		require_once( dirname( __FILE__ )  . '/bbpress-genesis-extend.php'          );
+		require_once( dirname( __FILE__ )  . '/bbpress-genesis-extend-settings.php' );
 
-			// All systems go!
-			add_action( 'bbp_ready', 'bbpge_setup', 6 );
-		}
+		// All systems go!
+		add_action( 'bbp_ready', 'bbpge_setup', 6 );
 	}
 
 	/**
