@@ -251,7 +251,8 @@ class BBP_Genesis {
 		$forum_id = bbp_get_forum_id();
 		// For some reason, if we use the cached version, weird things seem to happen.
 		// This needs more investigation, for now we pass false as a work around.
-		$retval   = genesis_get_option( 'site_layout', null, false ); 
+		$settings = get_option( GENESIS_SETTINGS_FIELD, null ); 
+		$retval   = isset( $settings['site_layout'] ) ? $settings['site_layout'] : null;
 		$parent   = false;
 
 		// Check and see if a layout has been set for the parent forum
