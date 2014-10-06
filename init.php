@@ -3,7 +3,7 @@
  * Plugin Name: bbPress Genesis Extend
  * Plugin URI:  http://wordpress.org/extend/plugins/bbpress-genesis-extend/
  * Description: Provides basic compaitibility between bbPress and the <a href="http://jaredatchison.com/go/genesis/">Genesis Framework</a>.
- * Version:     1.1.0
+ * Version:     1.1.1
  * Author:      Jared Atchison
  * Author URI:  http://www.jaredatchison.com 
  *
@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * @author     Jared Atchison
- * @version    1.1.0
+ * @version    1.1.1
  * @package    bbPressGenesisExtend
  * @copyright  Copyright (c) 2012, Jared Atchison
  * @link       http://jaredatchison.com

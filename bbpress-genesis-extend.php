@@ -33,6 +33,9 @@ class BBP_Genesis {
 		// Register forum sidebar if needed
 		$this->register_genesis_forum_sidebar();
 
+		// Remove Genesis profile fields from front end
+		$this->remove_profile_fields();
+
 		// We hook into 'genesis_before' because it is the most reliable hook
 		// available to bbPress in the Genesis page load process.
 		add_action( 'genesis_before',     array( $this, 'genesis_post_actions'        ) );
@@ -107,19 +110,6 @@ class BBP_Genesis {
 			 * Make sure the Genesis navigation doesn't try to show after the loop.
 			 */
 			remove_action( 'genesis_after_endwhile', 'genesis_posts_nav' );
-
-			/**
-			 * Remove Genesis profile fields
-			 * 
-			 * In some use cases the Genesis fields were showing (incorrectly)
-			 * on the bbPress profile edit pages, so we remove them just in case.
-			 */
-			if ( bbp_is_single_user_edit() ) {
-				remove_action( 'show_user_profile', 'genesis_user_options_fields' );
-				remove_action( 'show_user_profile', 'genesis_user_layout_fields'  );
-				remove_action( 'show_user_profile', 'genesis_user_seo_fields'     );
-				remove_action( 'show_user_profile', 'genesis_user_archive_fields' );
-			}
 			
 			/** Add Actions ***************************************************/
 
@@ -271,6 +261,27 @@ class BBP_Genesis {
 
 		// Filter the return value
 		return apply_filters( 'bbp_genesis_layout', $retval, $forum_id, $parent );
+	}
+
+	/**
+	 * Remove Genesis profile fields
+	 * 
+	 * In some use cases the Genesis fields were showing (incorrectly)
+	 * on the bbPress profile edit pages, so we remove them entirely.
+	 *
+	 * @since 1.1.1
+	 */
+	public function remove_profile_fields() {
+		if ( !is_admin() ) {
+			remove_action( 'show_user_profile', 'genesis_user_options_fields' );
+			remove_action( 'edit_user_profile', 'genesis_user_options_fields' );
+			remove_action( 'show_user_profile', 'genesis_user_archive_fields' );
+			remove_action( 'edit_user_profile', 'genesis_user_archive_fields' );
+			remove_action( 'show_user_profile', 'genesis_user_seo_fields'     );
+			remove_action( 'edit_user_profile', 'genesis_user_seo_fields'     );
+			remove_action( 'show_user_profile', 'genesis_user_layout_fields'  );
+			remove_action( 'edit_user_profile', 'genesis_user_layout_fields'  );
+		}
 	}
 	
 }
