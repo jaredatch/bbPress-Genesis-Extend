@@ -3,22 +3,22 @@
  * Plugin Name: bbPress Genesis Extend
  * Plugin URI:  http://wordpress.org/extend/plugins/bbpress-genesis-extend/
  * Description: Provides basic compaitibility between bbPress and the <a href="http://jaredatchison.com/go/genesis/">Genesis Framework</a>.
- * Version:     1.1.1
+ * Version:     1.2.0
  * Author:      Jared Atchison
- * Author URI:  http://www.jaredatchison.com 
+ * Author URI:  http://www.jaredatchison.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * @author     Jared Atchison
- * @version    1.1.1
+ * @version    1.2.0
  * @package    bbPressGenesisExtend
  * @copyright  Copyright (c) 2012, Jared Atchison
  * @link       http://jaredatchison.com
@@ -45,7 +45,7 @@ class bbpge_init {
 
 		add_action( 'genesis_init', array( $this, 'genesis_check' ) );
 	}
-	
+
 	/**
 	 * Check to see if  a Genesis child theme is in place.
 	 *
@@ -83,7 +83,7 @@ class bbpge_init {
 	function pe_init() {
 		load_plugin_textdomain( 'bbpress-genesis-extend', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
-	
+
 }
 
 new bbpge_init();

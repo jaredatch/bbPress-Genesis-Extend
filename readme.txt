@@ -1,18 +1,18 @@
 === bbPress Genesis Extend ===
-Contributors: jaredatch
+Contributors: jaredatch, nathanrice
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AD8KTWTTDX9JL
 Tags: bbpress, genesis
 Requires at least: 4.0.0
 Tested up to: 4.0.0
 Stable tag: trunk
- 
+
 Provides basic compatibility with bbPress and the Genesis Framework with a few extra goodies.
 
 == Description ==
 
 bbPress and the Genesis Framework are both fantastic additions to any WordPress site. However, depending on your setup they don't always play nice right away.
 
-bbPress Genesis Extend does some behind-the-scenes tweaks and fixes to make bbPress/Genesis integration as quick and painless as possible. 
+bbPress Genesis Extend does some behind-the-scenes tweaks and fixes to make bbPress/Genesis integration as quick and painless as possible.
 
 Additionally, this plugin also:
 
@@ -47,9 +47,12 @@ Specifically, font sizes often need to be adjusted so bbPress "blends" with your
 
 == Screenshots ==
 
-1. Options on the Genesis Settings page. 
+1. Options on the Genesis Settings page.
 
 == Changelog ==
+
+= 1.2.0 =
+* Add bbPress settings to Genesis customizer panel.
 
 = 1.1.1
 * Fixed issue with Genesis profile fields on front end, props @dreamwhisper
